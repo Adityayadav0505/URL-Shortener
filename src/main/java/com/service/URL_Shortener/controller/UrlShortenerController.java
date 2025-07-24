@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class UrlShortenerController {
 
-    @Autowired
-    private UrlShortenerService service;
+    private final UrlShortenerService service;
 
+    public UrlShortenerController(UrlShortenerService service){
+        this.service = service;
+    }
+    
     @GetMapping("/shorten")
     public void shorten(){
         service.shortenUrl("hello");
