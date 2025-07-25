@@ -20,8 +20,7 @@ public class UrlShortenerController {
     }
 
     @GetMapping("/shorten")
-    public ResponseEntity<UrlMapping> shorten(){
-        UrlMapping mapping = service.shortenUrl("hello");
-        return ResponseEntity.ok(mapping);
+    public String shorten(){
+        return service.shortenUrl("https://mail.google.com");
     }
 }

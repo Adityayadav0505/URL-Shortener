@@ -13,14 +13,29 @@ public class UrlShortenerService {
     @Autowired
     private UrlMappingRepository repository;
 
-    public UrlMapping shortenUrl(String originalUrl){
+    public String shortenUrl(String originalUrl){
         UrlMapping mapping = new UrlMapping();
 
         mapping.setLongUrl(originalUrl);
         mapping.setCreatedAt(LocalDateTime.now());
 
-        repository.save(mapping);
+        UrlMapping saved = repository.save(mapping);
 
-        return mapping;
+        String shortCode = encode(saved.getId());
+
+        saved.setShortCode(shortCode);
+        repository.save(saved);
+
+        return shortCode;
+    }
+
+    private String encode(Long id) {
+        String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder shortCode = new StringBuilder();
+        while (id > 0) {
+            shortCode.append(chars.charAt((int)(id % 62)));
+            id /= 62;
+        }
+        return shortCode.reverse().toString();
     }
 }
