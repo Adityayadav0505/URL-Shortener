@@ -13,12 +13,14 @@ public class UrlShortenerService {
     @Autowired
     private UrlMappingRepository repository;
 
-    public void shortenUrl(String originalUrl){
+    public UrlMapping shortenUrl(String originalUrl){
         UrlMapping mapping = new UrlMapping();
 
         mapping.setLongUrl(originalUrl);
         mapping.setCreatedAt(LocalDateTime.now());
 
         repository.save(mapping);
+
+        return mapping;
     }
 }

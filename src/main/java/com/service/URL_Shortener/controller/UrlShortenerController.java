@@ -1,7 +1,9 @@
 package com.service.URL_Shortener.controller;
 
+import com.service.URL_Shortener.model.UrlMapping;
 import com.service.URL_Shortener.service.UrlShortenerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +18,10 @@ public class UrlShortenerController {
     public UrlShortenerController(UrlShortenerService service){
         this.service = service;
     }
-    
+
     @GetMapping("/shorten")
-    public void shorten(){
-        service.shortenUrl("hello");
+    public ResponseEntity<UrlMapping> shorten(){
+        UrlMapping mapping = service.shortenUrl("hello");
+        return ResponseEntity.ok(mapping);
     }
 }
