@@ -29,6 +29,10 @@ public class UrlShortenerService {
         return shortCode;
     }
 
+    public String getOriginalUrl(String shortCode) {
+        return "";
+    }
+
     private String encode(Long id) {
         String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder shortCode = new StringBuilder();
