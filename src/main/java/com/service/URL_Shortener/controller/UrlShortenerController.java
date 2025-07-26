@@ -4,6 +4,7 @@ import com.service.URL_Shortener.model.UrlMapping;
 import com.service.URL_Shortener.service.UrlShortenerService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,5 +24,12 @@ public class UrlShortenerController {
 
         String baseUrl = request.getRequestURL().toString().replace(request.getRequestURI(), "");
         return baseUrl + "/" + shortCode;
+    }
+
+    @GetMapping("/{shortCode}")
+    public ResponseEntity<?> redirect(@PathVariable String shortCode){
+        String originalUrl = service.getOriginalUrl(shortCode);
+
+        return ResponseEntity.status(HttpStatus.FOUND).build();
     }
 }
