@@ -16,7 +16,7 @@ public class UrlShortenerService {
     public String shortenUrl(String originalUrl){
         UrlMapping mapping = new UrlMapping();
 
-        mapping.setLongUrl(originalUrl);
+        mapping.setOriginalUrl(originalUrl);
         mapping.setCreatedAt(LocalDateTime.now());
 
         UrlMapping saved = repository.save(mapping);
@@ -30,7 +30,9 @@ public class UrlShortenerService {
     }
 
     public String getOriginalUrl(String shortCode) {
-        return "";
+        return repository.findByShortCode(shortCode)
+                .orElseThrow(() -> new RuntimeException("Short URL not found"))
+                .getOriginalUrl();
     }
 
     private String encode(Long id) {
