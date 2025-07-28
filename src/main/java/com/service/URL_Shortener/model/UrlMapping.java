@@ -19,6 +19,8 @@ public class UrlMapping {
 
     private LocalDateTime createdAt;
 
+    private Long clickCount = 0L;
+
     public Long getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class UrlMapping {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Long getClickCount() {
+        return clickCount;
+    }
+
+    public void setClickCount(Long clickCount) {
+        this.clickCount = clickCount;
     }
 }
