@@ -2,7 +2,6 @@ package com.service.URL_Shortener.service;
 
 import com.service.URL_Shortener.model.UrlMapping;
 import com.service.URL_Shortener.repository.UrlMappingRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -10,8 +9,12 @@ import java.time.LocalDateTime;
 @Service
 public class UrlShortenerService {
 
-    @Autowired
-    private UrlMappingRepository repository;
+    private final UrlMappingRepository repository;
+
+    public UrlShortenerService(UrlMappingRepository repository) {
+        this.repository = repository;
+    }
+
 
     public String shortenUrl(String originalUrl){
         UrlMapping mapping = new UrlMapping();
@@ -29,10 +32,14 @@ public class UrlShortenerService {
         return shortCode;
     }
 
-    public String getOriginalUrl(String shortCode) {
-        return repository.findByShortCode(shortCode)
-                .orElseThrow(() -> new RuntimeException("Short URL not found"))
-                .getOriginalUrl();
+    public String  getOriginalUrl(String shortCode) {
+        UrlMapping mapping = repository.findByShortCode(shortCode)
+                .orElseThrow(() -> new RuntimeException("Short URL not found"));
+
+        mapping.setClickCount(mapping.getClickCount() + 1);
+
+        repository.save(mapping);
+        return mapping.getOriginalUrl();
     }
 
     private String encode(Long id) {
