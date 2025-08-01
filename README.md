@@ -7,9 +7,11 @@ A simple and scalable URL shortener service built with Java and Spring Boot.
 - Generate short URLs for long links
 - Redirect short URLs to original URLs
 - Auto-generated short codes using Base62 encoding
+- Track number of clicks for each short URL
+- Rate limiting using Resilience4j
 - REST API with clean structure
 - Optional database integration (e.g., MySQL/PostgreSQL)
-- Optional: Redis caching, rate limiting, analytics
+- Optional: Redis caching, analytics, expiry links
 
 ---
 
@@ -22,7 +24,7 @@ A simple and scalable URL shortener service built with Java and Spring Boot.
 - **MySQL / PostgreSQL**
 - **Lombok** (optional)
 - **Redis** (optional)
-
+- **Resilience4j** (for rate limiting)
 ---
 
 📡 API Endpoints
