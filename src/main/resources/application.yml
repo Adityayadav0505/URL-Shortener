@@ -1,0 +1,12 @@
+resilience4j:
+  ratelimiter:
+    instances:
+      shortenUrlLimiter:
+        limitForPeriod: 5
+        limitRefreshPeriod: 1s
+        timeoutDuration: 500ms
+
+      redirectUrlLimiter:
+        limitForPeriod: 5
+        limitRefreshPeriod: 100s
+        timeoutDuration: 500ms
