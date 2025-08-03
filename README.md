@@ -22,7 +22,6 @@ A simple and scalable URL shortener service built with Java and Spring Boot.
 - **Spring Web**
 - **Spring Data JPA**
 - **MySQL / PostgreSQL**
-- **Lombok** (optional)
 - **Redis** (optional)
 - **Resilience4j** (for rate limiting)
 ---
