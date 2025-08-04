@@ -33,3 +33,10 @@ Description: Shortens a long URL
 
 🔸 GET /{shortCode}
 Description: Redirects to the original URL
+
+## How to Run
+- Clone the repo
+- Configure your application.properties or application.yml with DB details
+- Run using command   ``./mvnw spring-boot:run``
+
+
