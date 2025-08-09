@@ -1,22 +1,19 @@
-# Use OpenJDK base image
-FROM eclipse-temurin:17-jdk-alpine
-
-# Set the working directory in container
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copy Maven wrapper & pom.xml first (to cache dependencies)
-COPY mvnw .
-COPY .mvn .mvn
+# Copy pom.xml first and download dependencies
 COPY pom.xml .
+RUN mvn dependency:go-offline -B
 
-# Download dependencies (cached for faster builds)
-RUN ./mvnw dependency:go-offline
-
-# Copy the rest of the project
+# Copy the rest of the source code
 COPY src ./src
 
-# Package the application
-RUN ./mvnw package -DskipTests
+# Package the app
+RUN mvn package -DskipTests
 
-# Run the jar file
-CMD ["java", "-jar", "target/URL-Shortener-0.0.1-SNAPSHOT.jar"]
+# Second stage: create final image
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY --from=build /app/target/URL-Shortener-0.0.1-SNAPSHOT.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
