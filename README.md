@@ -10,7 +10,8 @@ A simple and scalable URL shortener service built with Java and Spring Boot.
 - Track number of clicks for each short URL
 - Rate limiting using Resilience4j
 - REST API with clean structure
-- Optional database integration (e.g., MySQL/PostgreSQL)
+- Database integration (e.g., MySQL/PostgreSQL)
+- Easy deployment using Docker Compose
 - Optional: Redis caching, analytics, expiry links
 
 ---
@@ -22,21 +23,62 @@ A simple and scalable URL shortener service built with Java and Spring Boot.
 - **Spring Web**
 - **Spring Data JPA**
 - **MySQL / PostgreSQL**
-- **Redis** (optional)
 - **Resilience4j** (for rate limiting)
+- **Docker & Docker Compose**
+- **Redis** (optional)
+- 
 ---
 
-📡 API Endpoints
+## 📡 API Endpoints
 
-🔸 POST /shorten
-Description: Shortens a long URL
+### 🔹 POST `/shorten`
+**Description:** Shortens a long URL  
+**Request Body Example:**
+```json
+{
+  "originalUrl": "https://example.com"
+}
+```
+**Response Example:**
+```json
+{
+  "shortUrl": "http://localhost:8080/abc123"
+}
+```
+### 🔹 GET `/{shortCode}`
+**Description:** Redirects to the original URL
 
-🔸 GET /{shortCode}
-Description: Redirects to the original URL
 
-## How to Run
-- Clone the repo
-- Configure your application.properties or application.yml with DB details
-- Run using command   ``./mvnw spring-boot:run``
+## 🐳 Run with Docker Compose
+
+1️⃣ Clone the repository
+```bash
+git clone https://github.com/yourusername/url-shortener.git
+cd url-shortener
+```
+
+2️⃣ Build and start services
+```bash
+docker compose up --build
+```
+
+---
+
+## ⚙️ Environment Variables
+
+You can configure these in `application-docker.properties` as well as in `application-local.properties`:
+
+```properties
+spring.datasource.url=jdbc:mysql://db:3306/urlshortener
+spring.datasource.username=root
+spring.datasource.password=your_password
+spring.jpa.hibernate.ddl-auto=update
+```
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License.
 
 
