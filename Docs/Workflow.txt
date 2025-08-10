@@ -1,0 +1,48 @@
+Images & Containers:
+*Images built:
+2) Your application image → built in two stages:
+    Stage 1:
+        - Base: maven:3.9.6-eclipse-temurin-17
+        - Copies pom.xml → downloads dependencies (cached for future builds).
+        - Copies src/ → runs mvn package → produces URL-Shortener-0.0.1-SNAPSHOT.jar.
+
+    Stage 2:
+        - Base: eclipse-temurin:17-jdk
+        - Copies .jar from Stage 1.
+        - Runs it with ENTRYPOINT.
+
+2) MySQL image → pulled from Docker Hub (mysql:8.0).
+*Containers running:
+        - url-shortener-app (your Spring Boot app).
+        - mysql_db (MySQL database).
+
+Networking & Ports:
+Docker Compose creates a private network (bridge) for all services in the same docker-compose.yml.
+    Inside this network:
+        - db hostname resolves to the mysql_db container.
+        - app hostname resolves to the url-shortener-app container.
+
+Who Talks to Who:
+[ Spring Boot App Container ] <-- JDBC --> [ MySQL Container ]
+        ^                                      ^
+        |                                      |
+  localhost:8080                          localhost:3306
+        |                                      |
+[ Your Browser / API Client ]       [ MySQL Workbench on Host ]
+
+Final Workflow Diagram:
+docker compose up --build
+   |
+   |--> Build app image (Dockerfile stages)
+   |--> Pull MySQL image
+   |
+   |--> Start mysql_db container (mysql:8.0)
+   |        Port 3306 mapped to host
+   |
+   |--> Healthcheck until MySQL is ready
+   |
+   |--> Start url-shortener-app container (Spring Boot jar)
+            Port 8080 mapped to host
+   |
+   |--> Both containers share Docker Compose network
+            app connects to db via "db:3306"
