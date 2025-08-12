@@ -26,7 +26,6 @@ A simple and scalable URL shortener service built with Java and Spring Boot.
 - **Resilience4j** (for rate limiting)
 - **Docker & Docker Compose**
 - **Redis** (optional)
-- 
 ---
 
 ## 📡 API Endpoints
