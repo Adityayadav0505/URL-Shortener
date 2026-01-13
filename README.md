@@ -79,5 +79,3 @@ spring.jpa.hibernate.ddl-auto=update
 ## 📜 License
 
 This project is licensed under the MIT License.
-
-
